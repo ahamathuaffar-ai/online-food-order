@@ -1,0 +1,9 @@
+{
+  "name": "moonlight-food-ordering",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MooNLight Food online ordering system",
+  "scripts": {
+    "start": "node backend/server.js"
+  }
+}

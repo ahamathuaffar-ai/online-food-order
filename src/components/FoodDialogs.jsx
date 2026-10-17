@@ -1,0 +1,12 @@
+import React from 'react';
+import { safeImage } from '../data/menu';
+import formatPrice from '../utils/formatPrice';
+
+export default function FoodDialogs({ selectedFood, setSelectedFood, editingFood, setEditingFood, categories, onAddToCart, onSaveFood }) {
+  return (
+    <>
+      {selectedFood && <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelectedFood(null); }}><div className="food-modal" role="dialog" aria-modal="true" aria-label={selectedFood.name}><img src={safeImage(selectedFood.image)} alt={selectedFood.name} /><div className="food-modal-content"><button className="modal-close" onClick={() => setSelectedFood(null)} aria-label="Close">×</button><span className="food-category">{selectedFood.category}</span><h2>{selectedFood.name}</h2><p>{selectedFood.description}</p><strong>{formatPrice(selectedFood.price)}</strong><button className="button button-gold button-wide" onClick={() => { onAddToCart(selectedFood.id); setSelectedFood(null); }}>Add to cart&nbsp; +</button></div></div></div>}
+      {editingFood && <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setEditingFood(null); }}><form className="food-edit-modal" onSubmit={onSaveFood}><button className="modal-close" type="button" onClick={() => setEditingFood(null)} aria-label="Close">×</button><span className="eyebrow">Menu management</span><h2>{editingFood.id ? 'Edit food item' : 'Add food item'}</h2><label>Name<input name="name" defaultValue={editingFood.name || ''} maxLength="80" required /></label><div className="form-row"><label>Category<select name="category" defaultValue={editingFood.category || categories[0]} required>{categories.map((item) => <option key={item}>{item}</option>)}</select></label><label>Price (₹)<input name="price" type="number" min="1" max="100000" step="1" defaultValue={editingFood.price || ''} required /></label></div><label>Description<textarea name="description" defaultValue={editingFood.description || ''} maxLength="500" required /></label><label>Image URL<input name="image" type="url" defaultValue={editingFood.image || ''} placeholder="https://…" /></label><label className="checkbox-label"><input name="popular" type="checkbox" defaultChecked={Boolean(editingFood.popular)} /> Mark as a guest favorite</label><button className="button button-gold button-wide" type="submit">{editingFood.id ? 'Save changes' : 'Add to menu'}</button></form></div>}
+    </>
+  );
+}
