@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
+const API_BASE_URL = 'https://food-restaurants.onrender.com/api';
 
 export async function apiRequest(path, { token, ...options } = {}) {
   const headers = new Headers(options.headers || {});
